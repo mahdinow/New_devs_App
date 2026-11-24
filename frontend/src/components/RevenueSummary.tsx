@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { SecureAPI } from '../lib/secureApi';
+import { useAuth } from '../contexts/AuthContext.new';
 
 interface RevenueData {
     property_id: string;
@@ -15,11 +16,12 @@ interface RevenueSummaryProps {
 }
 
 export const RevenueSummary: React.FC<RevenueSummaryProps> = ({ propertyId = 'prop-001', debugTenant, showRaw }) => {
+    const { user } = useAuth();
     const [data, setData] = useState<RevenueData | null>(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState('');
 
-    const activeTenant = debugTenant || 'candidate';
+    const activeTenant = debugTenant || (user as any)?.tenant_id;
 
     useEffect(() => {
         const fetchRevenue = async () => {
@@ -27,10 +29,13 @@ export const RevenueSummary: React.FC<RevenueSummaryProps> = ({ propertyId = 'pr
             try {
                 // Use SecureAPI to handle authentication automatically
                 // We pass the simulatedTenant option which SecureAPI will attach as a header
-                const response = await SecureAPI.getDashboardSummary(propertyId, {
-                    simulatedTenant: activeTenant,
+                const options: { simulatedTenant?: string; timestamp: number } = {
                     timestamp: Date.now()
-                });
+                };
+                if (activeTenant) {
+                    options.simulatedTenant = activeTenant;
+                }
+                const response = await SecureAPI.getDashboardSummary(propertyId, options);
                 setData(response);
             } catch (err) {
                 setError('Failed to load revenue data');

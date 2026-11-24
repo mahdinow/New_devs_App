@@ -80,7 +80,7 @@ export function useCities(options: UseCitiesOptions = {}): UseCitiesResult {
       }
 
       // Fetch tenant-scoped cities (filters API), not raw properties
-      const backend = import.meta.env.VITE_BACKEND_URL || 'http://localhost:8000';
+      const backend = import.meta.env.VITE_BACKEND_URL || '';
       
       console.log('[useCities] 🚀 Starting API call to filters/cities');
       console.log('[useCities] Backend URL:', backend);

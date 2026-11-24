@@ -282,7 +282,7 @@ export async function createUser({
 
         // Create user through backend API
         const BACKEND_URL =
-            import.meta.env.VITE_BACKEND_URL || "http://localhost:8000";
+            import.meta.env.VITE_BACKEND_URL || "";
         const response = await fetch(`${BACKEND_URL}/api/v1/users`, {
             method: "POST",
             headers: {
@@ -410,7 +410,7 @@ export async function getUserPermissionsDetails(userId: string) {
         let userStatus = "active";
         let backendUserData: any = null;
 
-        const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || "http://localhost:8000";
+        const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || "";
 
         let allowedCitiesResponse: any[] = [];
         const allowedCityMap = new Map<string, string>();
@@ -622,7 +622,7 @@ export async function updateUser(
         // Update user metadata through backend API if provided
         if (Object.keys(userMetadata).length > 0 || Object.keys(appMetadata).length > 0 || updateData.password) {
             const BACKEND_URL =
-                import.meta.env.VITE_BACKEND_URL || "http://localhost:8000";
+                import.meta.env.VITE_BACKEND_URL || "";
 
             const updatePayload: any = {};
             if (Object.keys(userMetadata).length > 0) {

@@ -211,7 +211,7 @@ export async function uploadLocationImageFromUrl(
   placeId: string
 ): Promise<string | null> {
   try {
-    const API_BASE_URL = import.meta.env.VITE_BACKEND_URL || 'http://localhost:8000';
+    const API_BASE_URL = import.meta.env.VITE_BACKEND_URL || '';
 
     // Get auth headers
     const { data: { session } } = await supabase.auth.getSession();

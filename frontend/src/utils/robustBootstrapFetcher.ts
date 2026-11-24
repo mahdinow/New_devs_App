@@ -18,14 +18,7 @@ export interface BootstrapFetchResult {
  * Determines the correct backend URL based on environment
  */
 function getBackendUrl(): string {
-  // Check if we're in development
-  if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
-    return 'http://localhost:8000';
-  }
-  
-  // For production, use relative URL first (most likely to work)
-  // This avoids CORS issues and works with any domain
-  return '';
+  return import.meta.env.VITE_BACKEND_URL || '';
 }
 
 /**
